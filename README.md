@@ -59,7 +59,7 @@ or
 				android:name="android.support.FILE_PROVIDER_PATHS"
 				android:resource="@xml/file_viewer_provider_paths"
 			/>
-			</provider>
+		</provider>
 	</application>
 	....
 	```
