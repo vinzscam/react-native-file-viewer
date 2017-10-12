@@ -1,0 +1,31 @@
+
+{
+  "name": "react-native-file-viewer",
+  "version": "1.0.0",
+  "description": "Native file viewer for react-native",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "mobile",
+    "ios",
+    "android",
+    "file",
+    "viewer",
+    "preview",
+    "quicklook",
+    "pdf",
+    "doc"
+  ],
+  "author": "Vincenzo Scamporlino",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vinzscam/react-native-file-viewer.git"
+  },
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": ">=0.47"
+  }
+}

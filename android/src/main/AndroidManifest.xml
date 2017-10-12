@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  package="com.vinzscam.reactnativefileviewer"
+  >
+      <application>
+        <provider android:name="com.vinzscam.reactnativefileviewer.FileProvider" android:authorities="${applicationId}.provider" android:exported="false" android:grantUriPermissions="true">
+              <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_viewer_provider_paths" />
+        </provider>
+      </application>
+</manifest>
