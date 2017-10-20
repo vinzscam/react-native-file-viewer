@@ -1,7 +1,7 @@
 
 Pod::Spec.new do |s|
   s.name         = "RNFileViewer"
-  s.version      = "1.0.0"
+  s.version      = "1.0.1"
   s.summary      = "RNFileViewer"
   s.description  = <<-DESC
                   Native file viewer for react-native
