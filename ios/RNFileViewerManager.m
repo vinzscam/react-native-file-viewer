@@ -65,7 +65,7 @@ RCT_REMAP_METHOD(open,
     controller.dataSource = delegate;
     
     UIViewController *root = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-    [root presentViewController:controller animated:YES completion:^{ resolve(nil) }];
+    [root presentViewController:controller animated:YES completion:^{ resolve(nil); }];
 }
 
 @end
