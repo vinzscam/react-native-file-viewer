@@ -7,4 +7,4 @@ function open(path, title) {
   return RNFileViewer.open(path, title);
 }
 
-export { open };
+export default { open };
