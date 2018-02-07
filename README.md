@@ -68,9 +68,10 @@ or
 
 ### `open(filepath: string, displayName?: string): Promise<void>`
 
-The second argument has no effect on Android. It is used to customize QuickLook title on iOS.
-
-**Important**: The file needs to have a valid extension to be successfully detected.
+Parameter | Type | Description
+--------- | ---- | -----------
+**filepath** | string | The absolute path where the file is stored. The file needs to have a valid extension to be successfully detected. Use [react-native-fs constants](https://github.com/itinance/react-native-fs#constants) to determine the absolute path correctly.
+**displayName** (optional) | string | Customize the QuickLook title on iOS. It has no effect on Android.
 
 
 ## Usage
@@ -79,7 +80,7 @@ The second argument has no effect on Android. It is used to customize QuickLook 
 ```javascript
 import FileViewer from 'react-native-file-viewer';
 
-const path = // path-to-my-local-file;
+const path = // absolute-path-to-my-local-file.
 FileViewer.open(path)
 .then(() => {
 	// success
@@ -89,12 +90,38 @@ FileViewer.open(path)
 });
 ```
 
+### Open a file from Android assets folder
+
+Since the library works only with absolute paths and Android assets folder doesn't have any absolute path, the file needs to be copied first. Use [copyFileAssets](https://github.com/itinance/react-native-fs#copyfileassetsfilepath-string-destpath-string-promisevoid) of [react-native-fs](https://github.com/itinance/react-native-fs).
+
+Example (using react-native-fs):
+
+```javascript
+import FileViewer from 'react-native-file-viewer';
+import RNFS from 'react-native-fs';
+
+const file = 'file-to-open.doc'; // this is your file name
+
+// feel free to change main path according to your requirements
+const dest = `${RNFS.DocumentDirectoryPath}/${file}`;
+
+RNFS.copyFileAssets(file, dest)
+.then(() => FileViewer.open(dest))
+.then(() => {
+   // success
+})
+.catch(_err => {
+   /* */
+});
+
+```
+
 
 ### Download and open a file (using [react-native-fs](https://github.com/itinance/react-native-fs))
 No function about file downloading has been implemented in this package.
 Use [react-native-fs](https://github.com/itinance/react-native-fs) or any similar library for this purpose.
 
-Example (react-native-fs):
+Example (using react-native-fs):
 
 ```javascript
 import RNFS from 'react-native-fs';
@@ -103,9 +130,8 @@ import { Platform } from 'react-native';
 
 function getLocalPath (url) {
   const filename = url.split('/').pop();
-
-  // feel free to change the main path according to your requirements
-  return `${Platform.OS === 'ios' ? RNFS.MainBundlePath : RNFS.DocumentDirectoryPath}/${filename}`;
+  // feel free to change main path according to your requirements
+  return `${RNFS.DocumentDirectoryPath}/${filename}`;
 }
 
 const url = 'https://www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/PDF32000_2008.pdf';
