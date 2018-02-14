@@ -5,7 +5,12 @@
 #import <React/RCTBridgeModule.h>
 #endif
 
+@class UIViewController;
+
 @interface RNFileViewer : NSObject <RCTBridgeModule>
+
++ (UIViewController*)topViewController;
++ (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)viewController;
 
 @end
   
