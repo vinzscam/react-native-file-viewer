@@ -1,3 +1,1 @@
-export default {
-  open(path: string, title?: string): Promise<void>;
-}
+export function open(path: string, title?: string): Promise<void>;
