@@ -64,6 +64,10 @@ or
 	....
 	```
 
+#### Windows
+
+Follow the instructions in the ['Linking Libraries'](https://github.com/Microsoft/react-native-windows/blob/master/docs/LinkingLibrariesWindows.md) documentation on the react-native-windows GitHub repo. For the first step of adding the project to the Visual Studio solution file, the path to the project should be `../node_modules/react-native-file-viewer/windows/RNFileViewer/RNFileViewer.csproj`.
+
 ## API
 
 ### `open(filepath: string, displayName?: string): Promise<void>`
