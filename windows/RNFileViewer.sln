@@ -1,0 +1,94 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RNFileViewer", "RNFileViewer\RNFileViewer.csproj", "{BE578CFA-16B7-4B29-978E-EF14C9E88020}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNative", "..\GitHub\DCTApp\node_modules\react-native-windows\ReactWindows\ReactNative\ReactNative.csproj", "{C7673AD5-E3AA-468C-A5FD-FA38154E205C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactNativeWebViewBridge", "..\GitHub\DCTApp\node_modules\react-native-windows\ReactWindows\ReactNativeWebViewBridge\ReactNativeWebViewBridge.csproj", "{7596216B-669C-41F8-86DA-F3637F6545C0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChakraBridge", "..\GitHub\DCTApp\node_modules\react-native-windows\ReactWindows\ChakraBridge\ChakraBridge.vcxproj", "{4B72C796-16D5-4E3A-81C0-3E36F531E578}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\GitHub\DCTApp\node_modules\react-native-windows\ReactWindows\ReactNative.Shared\ReactNative.Shared.projitems*{c7673ad5-e3aa-468c-a5fd-fa38154e205c}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Debug|ARM.ActiveCfg = Debug|ARM
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Debug|ARM.Build.0 = Debug|ARM
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Debug|x64.ActiveCfg = Debug|x64
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Debug|x64.Build.0 = Debug|x64
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Debug|x86.ActiveCfg = Debug|x86
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Debug|x86.Build.0 = Debug|x86
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Release|ARM.ActiveCfg = Release|ARM
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Release|ARM.Build.0 = Release|ARM
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Release|x64.ActiveCfg = Release|x64
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Release|x64.Build.0 = Release|x64
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Release|x86.ActiveCfg = Release|x86
+		{BE578CFA-16B7-4B29-978E-EF14C9E88020}.Release|x86.Build.0 = Release|x86
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|ARM.ActiveCfg = Debug|ARM
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|ARM.Build.0 = Debug|ARM
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|x64.ActiveCfg = Debug|x64
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|x64.Build.0 = Debug|x64
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|x86.ActiveCfg = Debug|x86
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Debug|x86.Build.0 = Debug|x86
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|Any CPU.ActiveCfg = Release|x86
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|ARM.ActiveCfg = Release|ARM
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|ARM.Build.0 = Release|ARM
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|x64.ActiveCfg = Release|x64
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|x64.Build.0 = Release|x64
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|x86.ActiveCfg = Release|x86
+		{C7673AD5-E3AA-468C-A5FD-FA38154E205C}.Release|x86.Build.0 = Release|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|ARM.ActiveCfg = Debug|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|ARM.Build.0 = Debug|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|x64.ActiveCfg = Debug|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|x64.Build.0 = Debug|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|x86.ActiveCfg = Debug|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Debug|x86.Build.0 = Debug|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|Any CPU.ActiveCfg = Release|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|ARM.ActiveCfg = Release|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|ARM.Build.0 = Release|ARM
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|x64.ActiveCfg = Release|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|x64.Build.0 = Release|x64
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|x86.ActiveCfg = Release|x86
+		{7596216B-669C-41F8-86DA-F3637F6545C0}.Release|x86.Build.0 = Release|x86
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|ARM.ActiveCfg = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|ARM.Build.0 = Debug|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x64.ActiveCfg = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x64.Build.0 = Debug|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x86.ActiveCfg = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Debug|x86.Build.0 = Debug|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|Any CPU.ActiveCfg = Release|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|ARM.ActiveCfg = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|ARM.Build.0 = Release|ARM
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x64.ActiveCfg = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x64.Build.0 = Release|x64
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x86.ActiveCfg = Release|Win32
+		{4B72C796-16D5-4E3A-81C0-3E36F531E578}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E013D5A4-4715-4421-84A1-FC6AB9301C22}
+	EndGlobalSection
+EndGlobal
