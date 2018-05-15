@@ -4,7 +4,9 @@ Native file viewer for react-native. Preview any type of file supported by the m
 
 **iOS**: it uses [QuickLook Framework](https://developer.apple.com/library/content/documentation/FileManagement/Conceptual/DocumentInteraction_TopicsForIOS/Articles/UsingtheQuickLookFramework.html)
 
-**Android**: it uses `ACTION_VIEW` Intent
+**Android**: it uses `ACTION_VIEW` Intent to start the default app associated with the specified file.
+
+**Windows**: Start the default app associated with the specified file.
 
 ## Getting started
 
