@@ -18,7 +18,7 @@ or
 
 ### Mostly automatic installation
 
-`$ react-native link`
+`$ react-native link react-native-file-viewer`
 
 ### Manual installation
 
