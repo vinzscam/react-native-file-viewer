@@ -2,6 +2,7 @@
 package com.vinzscam.reactnativefileviewer;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.webkit.MimeTypeMap;
@@ -23,7 +24,7 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void open(String path, String _displayName, Promise promise) {
+  public void open(String path, String _displayName, Boolean openWith, Boolean showStore Promise promise) {
     File newFile = new File(path);
     Uri contentUri = null;
     try {
@@ -45,19 +46,43 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
     String mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
 
     Intent shareIntent = new Intent();
+
     shareIntent.setAction(Intent.ACTION_VIEW);
     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     shareIntent.setDataAndType(contentUri, mimeType);
     shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-    try {
-      getCurrentActivity().startActivity(shareIntent);
-      promise.resolve(null);
-    }
-    catch(Exception e) {
-      promise.reject(E_OPENING_ERROR, e);
-    }
-  }
 
+    Intent intentActivity;
+
+    if (openWith) {
+      intentActivity = Intent.createChooser(shareIntent, "Open with");
+    } else {
+      intentActivity = shareIntent;
+    }
+
+    PackageManager pm =  getCurrentActivity().getPackageManager();
+
+      if (shareIntent.resolveActivity(pm) != null) {
+          try {
+              getCurrentActivity().startActivity(intentActivity);
+              promise.resolve(null);
+          }
+          catch(Exception e) {
+              promise.reject(E_OPENING_ERROR, e);
+          }
+      } else {
+          try {
+              if (showStore) {
+                  Intent storeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=" + mimeType + "&c=apps"));
+                  getCurrentActivity().startActivity(storeIntent);
+              }
+              throw new Exception("No app associated with this mime type");
+          }
+          catch(Exception e) {
+              promise.reject(E_OPENING_ERROR, e);
+          }
+      }
+  }
 
   @Override
   public String getName() {
