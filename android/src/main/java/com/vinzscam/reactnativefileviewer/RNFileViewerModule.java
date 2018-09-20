@@ -24,7 +24,7 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void open(String path, String _displayName, Boolean openWith, Boolean showStore Promise promise) {
+  public void open(String path, String _displayName, Boolean openWith, Boolean showStore, Promise promise) {
     File newFile = new File(path);
     Uri contentUri = null;
     try {
