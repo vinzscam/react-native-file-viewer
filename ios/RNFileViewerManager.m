@@ -43,6 +43,18 @@
 
 @end
 
+
+@interface CustomQLViewController: QLPreviewController
+@end
+
+@implementation CustomQLViewController
+
+- (BOOL)prefersStatusBarHidden {
+    return UIApplication.sharedApplication.isStatusBarHidden;
+}
+
+@end
+
 @implementation RNFileViewer
 
 - (dispatch_queue_t)methodQueue
@@ -92,7 +104,7 @@ RCT_REMAP_METHOD(open,
     NSString *displayName = [RCTConvert NSString:options[@"displayName"]];
     delegate.file = [[File alloc] initWithPath: path title:displayName];
 
-    QLPreviewController *controller = [QLPreviewController new];
+    QLPreviewController *controller = [CustomQLViewController new];
     controller.delegate = delegate;
     controller.dataSource = delegate;
     
