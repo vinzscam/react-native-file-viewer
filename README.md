@@ -72,18 +72,25 @@ Follow the instructions in the ['Linking Libraries'](https://github.com/Microsof
 
 ## API
 
-### `open(filepath: string, displayName?: string,  openWith?: boolean, showStore?: boolean): Promise<void>`
+### `open(filepath: string, options?: Object): Promise<void>`
 
 Parameter | Type | Description
 --------- | ---- | -----------
 **filepath** | string | The absolute path where the file is stored. The file needs to have a valid extension to be successfully detected. Use [react-native-fs constants](https://github.com/itinance/react-native-fs#constants) to determine the absolute path correctly.
-**displayName** (optional) | string | Customize the QuickLook title on iOS. It has no effect on Android.
-**openWith** (optional) | boolean | Show an `Open With` dialogue box.
-**showStore** (optional) | boolean | If the mimetype of the file doesn't have an app associated with it, open the Play Store and suggest one.
+**options** (optional) | Object | Some options to customize the behaviour. See below.
+
+#### Options
+
+Parameter | Type | Description
+--------- | ---- | -----------
+**displayName** (optional) | string | Customize the QuickLook title (iOS only).
+**showOpenWithDialog** (optional) | boolean | If there is more than one app that can open the file, show an *Open With* dialogue box (Android only).
+**showAppsSuggestions** (optional) | boolean | If there is not an installed app that can open the file, open the Play Store with suggested apps (Android only).
 
 ## Usage
 
 ### Open a local file
+
 ```javascript
 import FileViewer from 'react-native-file-viewer';
 
@@ -96,12 +103,14 @@ FileViewer.open(path)
 	// error
 });
 ```
-### Prompt user to choose an app to open the file with (if they have multiple apps that support the mimetype)
+
+### Prompt the user to choose an app to open the file with (if there are multiple installed apps that support the mimetype)
+
 ```javascript
 import FileViewer from 'react-native-file-viewer';
 
 const path = // absolute-path-to-my-local-file.
-FileViewer.open(path, undefined, true)
+FileViewer.open(path, { showOpenWithDialog: true })
 .then(() => {
 	// success
 })

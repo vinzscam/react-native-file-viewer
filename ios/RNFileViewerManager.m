@@ -1,6 +1,7 @@
 
 #import "RNFileViewerManager.h"
 #import <QuickLook/QuickLook.h>
+#import <React/RCTConvert.h>
 
 @interface File: NSObject<QLPreviewItem>
 
@@ -83,13 +84,14 @@ RCT_EXPORT_MODULE()
 
 RCT_REMAP_METHOD(open,
   path:(NSString *)path
-  title:(NSString *)title
+  options:(NSDictionary *)options
   resolver:(RCTPromiseResolveBlock)resolve
   rejecter: (RCTPromiseRejectBlock)reject)
 {
     FileDelegate *delegate = [FileDelegate new];
-    delegate.file = [[File alloc] initWithPath: path title:title];
-    
+    NSString *displayName = [RCTConvert NSString:options[@"displayName"]];
+    delegate.file = [[File alloc] initWithPath: path title:displayName];
+
     QLPreviewController *controller = [QLPreviewController new];
     controller.delegate = delegate;
     controller.dataSource = delegate;

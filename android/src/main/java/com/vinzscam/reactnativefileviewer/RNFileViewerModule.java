@@ -10,6 +10,7 @@ import android.webkit.MimeTypeMap;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.Promise;
 
 import java.io.File;
@@ -17,6 +18,8 @@ import java.io.File;
 public class RNFileViewerModule extends ReactContextBaseJavaModule {
   private final ReactApplicationContext reactContext;
   private static final String E_OPENING_ERROR = "E_OPENING_ERROR";
+  private static final String SHOW_OPEN_WITH_DIALOG = "showOpenWithDialog" ;
+  private static final String SHOW_STORE_SUGGESTIONS ="showAppsSuggestions";
 
   public RNFileViewerModule(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -24,9 +27,12 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public void open(String path, String _displayName, Boolean openWith, Boolean showStore, Promise promise) {
+  public void open(String path, ReadableMap options, Promise promise) {
     File newFile = new File(path);
     Uri contentUri = null;
+    Boolean showOpenWithDialog = options.hasKey(SHOW_OPEN_WITH_DIALOG) ? options.getBoolean(SHOW_OPEN_WITH_DIALOG) : false;
+    Boolean showStoreSuggestions = options.hasKey(SHOW_STORE_SUGGESTIONS) ? options.getBoolean(SHOW_STORE_SUGGESTIONS) : false;
+
     try {
       final String packageName = getCurrentActivity().getPackageName();
       final String authority = new StringBuilder(packageName).append(".provider").toString();
@@ -54,7 +60,7 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
 
     Intent intentActivity;
 
-    if (openWith) {
+    if (showOpenWithDialog) {
       intentActivity = Intent.createChooser(shareIntent, "Open with");
     } else {
       intentActivity = shareIntent;
@@ -72,7 +78,7 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
           }
       } else {
           try {
-              if (showStore) {
+              if (showStoreSuggestions) {
                   Intent storeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=" + mimeType + "&c=apps"));
                   getCurrentActivity().startActivity(storeIntent);
               }
