@@ -1,6 +1,10 @@
+interface RNFileViewerOptions {
+    displayName?: string;
+    showAppsSuggestions?: boolean;
+    showOpenWithDialog?: boolean;
+}
+
 export function open(
   path: string,
-  title?: string,
-  openWith?: boolean,
-  showStore?: boolean
+  options?: RNFileViewerOptions | string
 ): Promise<void>;
