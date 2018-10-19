@@ -45,7 +45,7 @@ or
   	```
       compile project(':react-native-file-viewer')
   	```
-4. Copy `android/src/main/res/xml/file_viewer_provider_paths.xml` to your project `res/xml/` directory
+4. Copy `../node_modules/react-native-file-viewer/android/src/main/res/xml/file_viewer_provider_paths.xml` to your projects `../android/app/src/main/res/xml/` directory (create `xml` directory if it's missing)
 5. Add the following lines to `AndroidManifest.xml` between the main `<application></application>` tag:
 
 	```
