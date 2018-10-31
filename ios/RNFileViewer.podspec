@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.author             = { "author" => "vinz.scamporlino@gmail.com" }
   s.platform     = :ios, "10.0"
   s.source       = { :git => "https://github.com/vinzscam/react-native-file-viewer.git", :tag => "master" }
-  s.source_files  = "RNFileViewer/**/*.{h,m}"
+  s.source_files  = "*.{h,m}"
   s.requires_arc = true
 
 
