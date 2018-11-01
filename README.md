@@ -23,6 +23,13 @@ or
 ### Manual installation
 
 
+#### iOS (CocoaPods)
+
+Add the following to you Podfile:
+```
+pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios`
+```
+
 #### iOS
 
 1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
