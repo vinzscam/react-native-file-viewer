@@ -111,6 +111,27 @@ FileViewer.open(path)
 });
 ```
 
+### Pick up and open a local file (using [react-native-document-picker](https://github.com/Elyx0/react-native-document-picker))
+
+```javascript
+import FileViewer from 'react-native-file-viewer';
+import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+
+DocumentPicker.show({
+  filetype: [DocumentPickerUtil.allFiles()],
+}, (error, res) => {
+  if(res) {
+    FileViewer.open(res.uri)
+    .then(() => {
+      // success
+    })
+    .catch(_err => {
+      // error
+    });
+  }
+});
+```
+
 ### Prompt the user to choose an app to open the file with (if there are multiple installed apps that support the mimetype)
 
 ```javascript
@@ -146,12 +167,11 @@ RNFS.copyFileAssets(file, dest)
 .then(() => {
    // success
 })
-.catch(_err => {
+.catch(error => {
    /* */
 });
 
 ```
-
 
 ### Download and open a file (using [react-native-fs](https://github.com/itinance/react-native-fs))
 No function about file downloading has been implemented in this package.
