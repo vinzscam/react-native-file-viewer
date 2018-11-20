@@ -2,6 +2,7 @@
 using Windows.Storage;
 using Windows.System;
 using System;
+using Newtonsoft.Json.Linq;
 
 namespace RNFileViewer
 {
@@ -22,7 +23,7 @@ namespace RNFileViewer
         }
 
         [ReactMethod]
-        public async void open(string filepath, string _, IPromise promise)
+        public async void open(string filepath, JObject _, IPromise promise)
         {
             try
             {
