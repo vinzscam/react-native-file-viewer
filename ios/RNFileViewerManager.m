@@ -14,7 +14,8 @@
 
 @interface FileDelegate: NSObject<QLPreviewControllerDataSource, QLPreviewControllerDelegate>
 
-@property(nonatomic, strong) File *file;
+@property(nonatomic) File *file;
+@property(nonatomic) void (^dismissHandler)();
 
 @end
 
@@ -26,6 +27,10 @@
 
 - (id <QLPreviewItem>)previewController:(QLPreviewController *)controller previewItemAtIndex:(NSInteger)index{
     return self.file;
+}
+
+- (void)previewControllerWillDismiss:(QLPreviewController *)controller {
+    self.dismissHandler();
 }
 
 @end
@@ -55,7 +60,22 @@
 
 @end
 
+@interface RNFileViewer ()
+
+@property(nonatomic) NSMutableArray<FileDelegate *> *delegates;
+
+@end
+
 @implementation RNFileViewer
+
+- (instancetype)init
+{
+    if (self = [super init])
+    {
+        self.delegates = [NSMutableArray new];
+    }
+    return self;
+}
 
 - (dispatch_queue_t)methodQueue
 {
@@ -81,7 +101,7 @@
         for (UIView *view in [viewController.view subviews])
         {
             id subViewController = [view nextResponder];
-            if ( subViewController && [subViewController isKindOfClass:[UIViewController class]])
+            if (subViewController && [subViewController isKindOfClass:[UIViewController class]])
             {
                 if ([(UIViewController *)subViewController presentedViewController]  && ![subViewController presentedViewController].isBeingDismissed) {
                     return [self topViewControllerWithRootViewController:[(UIViewController *)subViewController presentedViewController]];
@@ -103,12 +123,19 @@ RCT_REMAP_METHOD(open,
     FileDelegate *delegate = [FileDelegate new];
     NSString *displayName = [RCTConvert NSString:options[@"displayName"]];
     delegate.file = [[File alloc] initWithPath: path title:displayName];
+    __weak typeof(self) weakSelf = self;
+    __weak typeof(delegate) weakDelegate = delegate;
+    delegate.dismissHandler = ^{
+        [weakSelf.delegates removeObject:weakDelegate];
+        resolve(nil);
+    };
+    [self.delegates addObject:delegate];
 
     QLPreviewController *controller = [CustomQLViewController new];
     controller.delegate = delegate;
     controller.dataSource = delegate;
     
-    [[RNFileViewer topViewController] presentViewController:controller animated:YES completion:^{ resolve(nil); }];
+    [[RNFileViewer topViewController] presentViewController:controller animated:YES completion:nil];
 }
 
 @end
