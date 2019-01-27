@@ -1,16 +1,12 @@
 
-#if __has_include("RCTBridgeModule.h")
-#import "RCTBridgeModule.h"
-#else
 #import <React/RCTBridgeModule.h>
-#endif
+#import <React/RCTEventEmitter.h>
 
 @class UIViewController;
 
-@interface RNFileViewer : NSObject <RCTBridgeModule>
+@interface RNFileViewer : RCTEventEmitter <RCTBridgeModule>
 
 + (UIViewController*)topViewController;
 + (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)viewController;
 
 @end
-  

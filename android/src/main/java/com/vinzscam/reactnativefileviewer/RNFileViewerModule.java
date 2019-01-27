@@ -1,18 +1,23 @@
 
 package com.vinzscam.reactnativefileviewer;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.content.FileProvider;
 import android.webkit.MimeTypeMap;
 
+import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.BaseActivityEventListener;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-import com.facebook.react.bridge.Promise;
+import com.facebook.react.bridge.WritableMap;
 
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 import java.io.File;
 
 public class RNFileViewerModule extends ReactContextBaseJavaModule {
@@ -20,14 +25,24 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
   private static final String E_OPENING_ERROR = "E_OPENING_ERROR";
   private static final String SHOW_OPEN_WITH_DIALOG = "showOpenWithDialog" ;
   private static final String SHOW_STORE_SUGGESTIONS ="showAppsSuggestions";
+  private static final String OPEN_EVENT = "RNFileViewerDidOpen";
+  private static final String DISMISS_EVENT = "RNFileViewerDidDismiss";
+
+  private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
+    @Override
+    public void onActivityResult(final Activity activity, final int requestCode, final int resultCode, final Intent intent) {
+      sendEvent(DISMISS_EVENT, requestCode, null);
+    }
+  };
 
   public RNFileViewerModule(ReactApplicationContext reactContext) {
     super(reactContext);
     this.reactContext = reactContext;
+    reactContext.addActivityEventListener(mActivityEventListener);
   }
 
   @ReactMethod
-  public void open(String path, ReadableMap options, Promise promise) {
+  public void open(String path, Integer currentId, ReadableMap options) {
     Uri contentUri = null;
     Boolean showOpenWithDialog = options.hasKey(SHOW_OPEN_WITH_DIALOG) ? options.getBoolean(SHOW_OPEN_WITH_DIALOG) : false;
     Boolean showStoreSuggestions = options.hasKey(SHOW_STORE_SUGGESTIONS) ? options.getBoolean(SHOW_STORE_SUGGESTIONS) : false;
@@ -42,13 +57,13 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
         contentUri = FileProvider.getUriForFile(getCurrentActivity(), authority, newFile);
       }
       catch(IllegalArgumentException e) {
-        promise.reject(E_OPENING_ERROR, e);
+        sendEvent(OPEN_EVENT, currentId, e.getMessage());
         return;
       }
     }
 
     if(contentUri == null) {
-      promise.reject(E_OPENING_ERROR, "Invalid file");
+      sendEvent(OPEN_EVENT, currentId, "Invalid file");
       return;
     }
 
@@ -72,30 +87,40 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
 
     PackageManager pm =  getCurrentActivity().getPackageManager();
 
-      if (shareIntent.resolveActivity(pm) != null) {
-          try {
-              getCurrentActivity().startActivity(intentActivity);
-              promise.resolve(null);
-          }
-          catch(Exception e) {
-              promise.reject(E_OPENING_ERROR, e);
-          }
+    if (shareIntent.resolveActivity(pm) != null) {
+      try {
+        getCurrentActivity().startActivityForResult(intentActivity, currentId);
+        sendEvent(OPEN_EVENT, currentId, null);
+      }
+      catch(Exception e) {
+        sendEvent(OPEN_EVENT, currentId, e.getMessage());
+      }
       } else {
-          try {
-              if (showStoreSuggestions) {
-                  Intent storeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=" + mimeType + "&c=apps"));
-                  getCurrentActivity().startActivity(storeIntent);
-              }
-              throw new Exception("No app associated with this mime type");
+        try {
+          if (showStoreSuggestions) {
+            Intent storeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=" + mimeType + "&c=apps"));
+            getCurrentActivity().startActivity(storeIntent);
           }
-          catch(Exception e) {
-              promise.reject(E_OPENING_ERROR, e);
-          }
+          throw new Exception("No app associated with this mime type");
+        }
+        catch(Exception e) {
+          sendEvent(OPEN_EVENT, currentId, e.getMessage());
+        }
       }
   }
 
   @Override
   public String getName() {
     return "RNFileViewer";
+  }
+
+  private void sendEvent(String eventName, Integer currentId, String errorMessage) {
+    WritableMap params = Arguments.createMap();
+    params.putInt("id", currentId);
+    if(errorMessage != null) {
+      params.putString("error", errorMessage);
+    }
+    reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+      .emit(eventName, params);
   }
 }
