@@ -1,6 +1,6 @@
 {
   "name": "react-native-file-viewer",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Native file viewer for react-native",
   "main": "index.js",
   "types": "index.d.ts",
