@@ -1,4 +1,4 @@
-import { NativeEventEmitter, NativeModules } from 'react-native';
+import { NativeEventEmitter, NativeModules, Platform } from 'react-native';
 
 const { RNFileViewer } = NativeModules;
 const eventEmitter = new NativeEventEmitter(RNFileViewer);
@@ -10,6 +10,10 @@ function open(path, options = { }) {
     ? { displayName: options }
     : options;
   const { onDismiss, ...nativeOptions } = _options;
+
+  if (!['android', 'ios'].includes(Platform.OS)) {
+    return RNFileViewer.open(path, nativeOptions);
+  }
 
   return new Promise((resolve, reject) => {
     const currentId = ++lastId;

@@ -91,7 +91,7 @@ Parameter | Type | Description
 Parameter | Type | Description
 --------- | ---- | -----------
 **displayName** (optional) | string | Customize the QuickLook title (iOS only).
-**onDismiss** (optional) | function | Callback invoked when the viewer is being dismissed.
+**onDismiss** (optional) | function | Callback invoked when the viewer is being dismissed (iOS and Android only).
 **showOpenWithDialog** (optional) | boolean | If there is more than one app that can open the file, show an *Open With* dialogue box (Android only).
 **showAppsSuggestions** (optional) | boolean | If there is not an installed app that can open the file, open the Play Store with suggested apps (Android only).
 
