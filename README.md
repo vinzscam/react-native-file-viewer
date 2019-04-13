@@ -52,7 +52,7 @@ pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios`
   	```
       compile project(':react-native-file-viewer')
   	```
-4. Copy `android/src/main/res/xml/file_viewer_provider_paths.xml` to your project `res/xml/` directory
+4. Locate `react-native-file-viewer` instalation folder inside your `node_modules` folder, copy `android/src/main/res/xml/file_viewer_provider_paths.xml` to your project `res/xml/` directory
 5. Add the following lines to `AndroidManifest.xml` between the main `<application></application>` tag:
 
 	```
