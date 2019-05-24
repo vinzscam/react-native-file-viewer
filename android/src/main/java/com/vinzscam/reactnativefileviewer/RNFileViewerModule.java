@@ -22,16 +22,16 @@ import java.io.File;
 
 public class RNFileViewerModule extends ReactContextBaseJavaModule {
   private final ReactApplicationContext reactContext;
-  private static final String E_OPENING_ERROR = "E_OPENING_ERROR";
   private static final String SHOW_OPEN_WITH_DIALOG = "showOpenWithDialog" ;
   private static final String SHOW_STORE_SUGGESTIONS ="showAppsSuggestions";
   private static final String OPEN_EVENT = "RNFileViewerDidOpen";
   private static final String DISMISS_EVENT = "RNFileViewerDidDismiss";
+  private static final Integer RN_FILE_VIEWER_REQUEST = 33341;
 
   private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
     @Override
     public void onActivityResult(final Activity activity, final int requestCode, final int resultCode, final Intent intent) {
-      sendEvent(DISMISS_EVENT, requestCode, null);
+      sendEvent(DISMISS_EVENT, requestCode - RN_FILE_VIEWER_REQUEST, null);
     }
   };
 
@@ -76,7 +76,6 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
     shareIntent.setDataAndType(contentUri, mimeType);
     shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
-
     Intent intentActivity;
 
     if (showOpenWithDialog) {
@@ -85,11 +84,11 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
       intentActivity = shareIntent;
     }
 
-    PackageManager pm =  getCurrentActivity().getPackageManager();
+    PackageManager pm = getCurrentActivity().getPackageManager();
 
     if (shareIntent.resolveActivity(pm) != null) {
       try {
-        getCurrentActivity().startActivityForResult(intentActivity, currentId);
+        getCurrentActivity().startActivityForResult(intentActivity, currentId + RN_FILE_VIEWER_REQUEST);
         sendEvent(OPEN_EVENT, currentId, null);
       }
       catch(Exception e) {
@@ -98,6 +97,9 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
       } else {
         try {
           if (showStoreSuggestions) {
+            if(mimeType == null) {
+              throw new Exception("It wasn't possible to detect the type of the file");
+            }
             Intent storeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=" + mimeType + "&c=apps"));
             getCurrentActivity().startActivity(storeIntent);
           }
