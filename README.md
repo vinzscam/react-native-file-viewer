@@ -8,6 +8,20 @@ Native file viewer for react-native. Preview any type of file supported by the m
 
 **Windows**: Start the default app associated with the specified file.
 
+## Android X Breaking changes
+
+The library supports [Android X](https://developer.android.com/jetpack/androidx/) and React Native 0.60+.
+
+If you're using **React Native < 0.60**, please append the following snippet to your `android/app/build.gradle` file:
+
+```
+preBuild.doFirst {
+    ant.replaceregexp(match:'androidx.core.content.', replace:'android.support.v4.content.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/react-native-file-viewer/android/src/main/java/com/vinzscam/reactnativefileviewer', includes: '*.java')
+    }
+}
+```
+
 ## Getting started
 
 `$ npm install react-native-file-viewer --save`
