@@ -16,7 +16,7 @@ If you're using **React Native < 0.60**, please append the following snippet to 
 
 ```
 preBuild.doFirst {
-    ant.replaceregexp(match:'androidx.core.content.', replace:'android.support.v4.content.', flags:'g', byline:true) {
+    ant.replaceregexp(match:'android.support.v4.content.', replace:'androidx.core.content.', flags:'g', byline:true) {
         fileset(dir: '../../node_modules/react-native-file-viewer/android/src/main/java/com/vinzscam/reactnativefileviewer', includes: '*.java')
     }
 }
