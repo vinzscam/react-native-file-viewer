@@ -41,7 +41,7 @@ or
 
 Add the following to you Podfile:
 ```
-pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios`
+pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios'
 ```
 
 #### iOS
