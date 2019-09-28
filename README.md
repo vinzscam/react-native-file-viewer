@@ -22,6 +22,8 @@ preBuild.doFirst {
 }
 ```
 
+If you prefer to not touch your gradle file, you can still use version `1.0.15` which is perfectly compatible.
+
 ## Getting started
 
 `$ npm install react-native-file-viewer --save`
@@ -40,6 +42,7 @@ or
 #### iOS (CocoaPods)
 
 Add the following to you Podfile:
+
 ```
 pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios'
 ```
@@ -62,11 +65,14 @@ pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios'
   	include ':react-native-file-viewer'
   	project(':react-native-file-viewer').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-file-viewer/android')
   	```
+
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
+
   	```
-      compile project(':react-native-file-viewer')
+   compile project(':react-native-file-viewer')
   	```
-4. Copy `android/src/main/res/xml/file_viewer_provider_paths.xml` to your project `res/xml/` directory
+
+4. Locate `react-native-file-viewer` inside `node_modules` folder and copy `android/src/main/res/xml/file_viewer_provider_paths.xml` to your project `res/xml/` directory
 5. Add the following lines to `AndroidManifest.xml` between the main `<application></application>` tag:
 
 	```
@@ -199,14 +205,11 @@ import RNFS from 'react-native-fs';
 import FileViewer from 'react-native-file-viewer';
 import { Platform } from 'react-native';
 
-function getLocalPath (url) {
-  const filename = url.split('/').pop();
-  // feel free to change main path according to your requirements
-  return `${RNFS.DocumentDirectoryPath}/${filename}`;
-}
-
 const url = 'https://www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/PDF32000_2008.pdf';
-const localFile = getLocalPath(url);
+
+// Feel free to change main path according to your requirements.
+// IMPORTANT: A file extension is always required on iOS.
+const localFile = `${RNFS.DocumentDirectoryPath}/temporaryfile.pdf`;
 
 const options = {
   fromUrl: url,
