@@ -8,6 +8,22 @@ Native file viewer for react-native. Preview any type of file supported by the m
 
 **Windows**: Start the default app associated with the specified file.
 
+## Android X Breaking changes
+
+The library supports [Android X](https://developer.android.com/jetpack/androidx/) and React Native 0.60+.
+
+If you're using **React Native < 0.60**, please append the following snippet to your `android/app/build.gradle` file:
+
+```
+preBuild.doFirst {
+    ant.replaceregexp(match:'androidx.core.content.', replace:'android.support.v4.content.', flags:'g', byline:true) {
+        fileset(dir: '../../node_modules/react-native-file-viewer/android/src/main/java/com/vinzscam/reactnativefileviewer', includes: '*.java')
+    }
+}
+```
+
+If you prefer to not touch your gradle file, you can still use version `1.0.15` which is perfectly compatible.
+
 ## Getting started
 
 `$ npm install react-native-file-viewer --save`
@@ -26,8 +42,9 @@ or
 #### iOS (CocoaPods)
 
 Add the following to you Podfile:
+
 ```
-pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios`
+pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios'
 ```
 
 #### iOS
@@ -48,11 +65,15 @@ pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios`
   	include ':react-native-file-viewer'
   	project(':react-native-file-viewer').projectDir = new File(rootProject.projectDir, 	'../node_modules/react-native-file-viewer/android')
   	```
+
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
+
   	```
-      compile project(':react-native-file-viewer')
+   compile project(':react-native-file-viewer')
   	```
+
 4. Locate `react-native-file-viewer` instalation folder inside your `node_modules` folder, copy `android/src/main/res/xml/file_viewer_provider_paths.xml` to your project `res/xml/` directory
+
 5. Add the following lines to `AndroidManifest.xml` between the main `<application></application>` tag:
 
 	```
@@ -185,14 +206,11 @@ import RNFS from 'react-native-fs';
 import FileViewer from 'react-native-file-viewer';
 import { Platform } from 'react-native';
 
-function getLocalPath (url) {
-  const filename = url.split('/').pop();
-  // feel free to change main path according to your requirements
-  return `${RNFS.DocumentDirectoryPath}/${filename}`;
-}
-
 const url = 'https://www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/PDF32000_2008.pdf';
-const localFile = getLocalPath(url);
+
+// Feel free to change main path according to your requirements.
+// IMPORTANT: A file extension is always required on iOS.
+const localFile = `${RNFS.DocumentDirectoryPath}/temporaryfile.pdf`;
 
 const options = {
   fromUrl: url,

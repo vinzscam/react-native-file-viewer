@@ -3,6 +3,7 @@ using Windows.Storage;
 using Windows.System;
 using System;
 using Newtonsoft.Json.Linq;
+using Windows.UI.Core;
 
 namespace RNFileViewer
 {
@@ -25,32 +26,39 @@ namespace RNFileViewer
         [ReactMethod]
         public async void open(string filepath, JObject _, IPromise promise)
         {
-            try
+            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
+            async () =>
             {
-                var file = await StorageFile.GetFileFromPathAsync(filepath);
 
-                if (file != null)
+                try
                 {
-                    var success = await Launcher.LaunchFileAsync(file);
+                    var file = await StorageFile.GetFileFromPathAsync(filepath);
 
-                    if (success)
+                    if (file != null)
                     {
-                        promise.Resolve(null);
+                        var success = await Launcher.LaunchFileAsync(file);
+
+                        if (success)
+                        {
+                            promise.Resolve(null);
+                        }
+                        else
+                        {
+                            promise.Reject(null, "File open failed.");
+                        }
                     }
                     else
                     {
-                        promise.Reject(null, "File open failed.");
+                        promise.Reject(null, "File not found.");
                     }
                 }
-                else
+                catch (Exception e)
                 {
-                    promise.Reject(null, "File not found.");
+                    promise.Reject(null, filepath, e);
                 }
-            } catch (Exception e)
-            {
-                promise.Reject(null, filepath, e);
             }
-            
+           );
+
         }
     }
 }
