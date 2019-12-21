@@ -34,7 +34,13 @@ or
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-file-viewer`
+```
+# RN >= 0.60
+cd ios && pod install
+
+# RN < 0.60
+react-native link react-native-file-viewer
+```
 
 ### Manual installation
 
@@ -208,7 +214,10 @@ import { Platform } from 'react-native';
 const url = 'https://www.adobe.com/content/dam/Adobe/en/devnet/pdf/pdfs/PDF32000_2008.pdf';
 
 // Feel free to change main path according to your requirements.
+
 // IMPORTANT: A file extension is always required on iOS.
+// You might encounter issues if the file extension isn't included
+// or if the extension doesn't match the mime type of the file.
 const localFile = `${RNFS.DocumentDirectoryPath}/temporaryfile.pdf`;
 
 const options = {
