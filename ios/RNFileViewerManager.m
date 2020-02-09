@@ -99,7 +99,7 @@
     }
 }
 
-- (void)previewControllerWillDismiss:(CustomQLViewController *)controller {
+- (void)previewControllerDidDismiss:(CustomQLViewController *)controller {
     [self sendEventWithName:DISMISS_EVENT body: @{@"id": controller.invocation}];
 }
 
