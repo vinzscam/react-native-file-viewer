@@ -32,7 +32,7 @@ or
 
 `$ yarn add react-native-file-viewer`
 
-### Mostly automatic installation
+### Mostly automatic installation (recommended)
 
 ```
 # RN >= 0.60
@@ -50,7 +50,7 @@ react-native link react-native-file-viewer
 Add the following to you Podfile:
 
 ```
-pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer/ios'
+pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer'
 ```
 
 #### iOS
@@ -141,22 +141,18 @@ FileViewer.open(path)
 ### Pick up and open a local file (using [react-native-document-picker](https://github.com/Elyx0/react-native-document-picker))
 
 ```javascript
-import FileViewer from 'react-native-file-viewer';
-import { DocumentPicker, DocumentPickerUtil } from 'react-native-document-picker';
+import FileViewer from "react-native-file-viewer";
+import DocumentPicker from "react-native-document-picker";
 
-DocumentPicker.show({
-  filetype: [DocumentPickerUtil.allFiles()],
-}, (error, res) => {
-  if(res) {
-    FileViewer.open(res.uri)
-    .then(() => {
-      // success
-    })
-    .catch(_err => {
-      // error
-    });
-  }
-});
+try {
+  const res = await DocumentPicker.pick({
+    type: [DocumentPicker.types.allFiles],
+  });
+  await FileViewer.open(res.uri);
+}
+catch(e) {
+  // error
+}
 ```
 
 ### Prompt the user to choose an app to open the file with (if there are multiple installed apps that support the mimetype)
