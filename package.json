@@ -27,6 +27,10 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "react-native": ">=0.47"
+    "react-native": ">=0.47",
+    "react-native-windows": "0.61.5"
+  },
+  "devDependencies": {
+    "react-native": "0.61.5"
   }
 }

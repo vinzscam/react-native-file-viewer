@@ -1,8 +1,8 @@
-﻿using ReactNative.Bridge;
-using Windows.Storage;
+﻿using Windows.Storage;
 using Windows.System;
 using System;
-using Newtonsoft.Json.Linq;
+using Microsoft.ReactNative.Managed;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
 namespace RNFileViewer
@@ -10,55 +10,41 @@ namespace RNFileViewer
     /// <summary>
     /// A module that allows JS to share data.
     /// </summary>
-    class RNFileViewerModule : NativeModuleBase
+    [ReactModule]
+    class RNFileViewerModule
     {
-        /// <summary>
-        /// The name of the native module.
-        /// </summary>
-        public override string Name
+        [ReactMethod("open")]
+        public async void Open(string filepath, IReactPromise<bool> promise)
         {
-            get
+            try
             {
-                return "RNFileViewer";
-            }
-        }
+                var file = await StorageFile.GetFileFromPathAsync(filepath);
 
-        [ReactMethod]
-        public async void open(string filepath, JObject _, IPromise promise)
-        {
-            await Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-            async () =>
-            {
-
-                try
+                if (file != null)
                 {
-                    var file = await StorageFile.GetFileFromPathAsync(filepath);
-
-                    if (file != null)
+                    await CoreApplication.MainView.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
                     {
                         var success = await Launcher.LaunchFileAsync(file);
 
                         if (success)
                         {
-                            promise.Resolve(null);
+                            promise.Resolve(true);
                         }
                         else
                         {
-                            promise.Reject(null, "File open failed.");
+                            promise.Reject(new ReactError { Message = $"Error opening the file {filepath}" });
                         }
-                    }
-                    else
-                    {
-                        promise.Reject(null, "File not found.");
-                    }
+                    });
                 }
-                catch (Exception e)
+                else
                 {
-                    promise.Reject(null, filepath, e);
+                    promise.Reject(new ReactError { Message = $"Error loading the file {filepath}" });
                 }
             }
-           );
-
+            catch (Exception e)
+            {
+                promise.Reject(new ReactError { Exception = e });
+            }
         }
     }
 }
