@@ -10,7 +10,7 @@ namespace RNFileViewer
     /// <summary>
     /// A module that allows JS to share data.
     /// </summary>
-    [ReactModule]
+    [ReactModule("RNFileViewer")]
     class RNFileViewerModule
     {
         [ReactMethod("open")]

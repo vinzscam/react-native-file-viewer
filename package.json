@@ -1,5 +1,5 @@
 {
-  "name": "react-native-file-viewer",
+  "name": "@qmatteoq/react-native-file-viewer",
   "version": "2.1.1",
   "description": "Native file viewer for react-native",
   "main": "index.js",
@@ -27,11 +27,16 @@
   },
   "license": "MIT",
   "peerDependencies": {
-    "react-native": ">=0.47",
-    "react-native-windows": "0.61.5"
+    "react-native": "<0.62",
+    "react-native-windows": "^0.61.9"
   },
   "devDependencies": {
     "react-native": "0.61.5",
-    "react-native-windows": "0.61.5"
-  }
+    "react-native-windows": "^0.61.9"
+  },
+  "dependencies": {},
+  "bugs": {
+    "url": "https://github.com/vinzscam/react-native-file-viewer/issues"
+  },
+  "homepage": "https://github.com/vinzscam/react-native-file-viewer#readme"
 }
