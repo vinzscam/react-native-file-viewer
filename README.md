@@ -101,7 +101,31 @@ pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer'
 
 #### Windows
 
-Follow the instructions in the ['Linking Libraries'](https://github.com/Microsoft/react-native-windows/blob/master/docs/LinkingLibrariesWindows.md) documentation on the react-native-windows GitHub repo. For the first step of adding the project to the Visual Studio solution file, the path to the project should be `../node_modules/react-native-file-viewer/windows/RNFileViewer/RNFileViewer.csproj`.
+1. Open the Visual Studio solution created inside the `windows` folder.
+2. Right click on the solution in File Explorer and choose `Add -> Existing Project`.
+3. Look for the `RNFileViewer.csproj` file in the `node_modules/react-native-file-viewer/windows/RNFileViewer` and press `Open`.
+4. Right click on the main Windows project and choose `Add reference`.
+5. Select the `RNFileViewer` project you have just added from the list.
+6. Open the `pch.h` file included in the main Windows project
+7. Add the following declaration at the end:
+
+    ```cpp
+    #include <winrt/RNFileViewer.h>
+    ```
+
+8. Open the `App.cpp` file included in the main Windows project (expand the `App.xaml` node if you don't see it)
+9. Look for the following line of code:
+
+    ```cpp
+    PackageProviders().Append(make<ReactPackageProvider>());
+    ```
+10. Add the following line of code just below:
+
+    ```cpp
+    PackageProviders().Append(winrt::RNFileViewer::ReactPackageProvider());
+    ```
+
+11. Build and deploy the Windows project
 
 ## API
 
