@@ -13,5 +13,5 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://github.com/vinzscam/react-native-file-viewer.git", :tag => 'v#{s.version}' }
   s.source_files  = "ios/*.{h,m}"
   s.requires_arc = true
-  s.dependency "React"
+  s.dependency "React-Core"
 end
