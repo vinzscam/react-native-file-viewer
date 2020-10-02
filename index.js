@@ -41,7 +41,7 @@ function open(path, options = {}) {
 }
 
 function normalize(path) {
-  if (Platform.OS === "ios") {
+  if (Platform.OS === "ios" || Platform.OS === "android") {
     const filePrefix = "file://";
     if (path.startsWith(filePrefix)) {
       path = path.substring(filePrefix.length);
