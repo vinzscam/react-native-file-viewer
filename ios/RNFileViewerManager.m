@@ -70,33 +70,32 @@
 }
 
 + (UIViewController*)topViewController {
-    return [self topViewControllerWithRootViewController:[UIApplication sharedApplication].keyWindow.rootViewController];
+    UIViewController *presenterViewController = [self topViewControllerWithRootViewController:UIApplication.sharedApplication.keyWindow.rootViewController];
+    return presenterViewController ? presenterViewController : UIApplication.sharedApplication.keyWindow.rootViewController;
 }
 
 + (UIViewController*)topViewControllerWithRootViewController:(UIViewController*)viewController {
     if ([viewController isKindOfClass:[UITabBarController class]]) {
         UITabBarController* tabBarController = (UITabBarController*)viewController;
         return [self topViewControllerWithRootViewController:tabBarController.selectedViewController];
-    } else if ([viewController isKindOfClass:[UINavigationController class]]) {
+    }
+    if ([viewController isKindOfClass:[UINavigationController class]]) {
         UINavigationController* navContObj = (UINavigationController*)viewController;
         return [self topViewControllerWithRootViewController:navContObj.visibleViewController];
-    } else if (viewController.presentedViewController && !viewController.presentedViewController.isBeingDismissed) {
+    }
+    if (viewController.presentedViewController && !viewController.presentedViewController.isBeingDismissed) {
         UIViewController* presentedViewController = viewController.presentedViewController;
         return [self topViewControllerWithRootViewController:presentedViewController];
     }
-    else {
-        for (UIView *view in [viewController.view subviews])
-        {
-            id subViewController = [view nextResponder];
-            if ( subViewController && [subViewController isKindOfClass:[UIViewController class]])
-            {
-                if ([(UIViewController *)subViewController presentedViewController]  && ![subViewController presentedViewController].isBeingDismissed) {
-                    return [self topViewControllerWithRootViewController:[(UIViewController *)subViewController presentedViewController]];
-                }
+    for (UIView *view in [viewController.view subviews]) {
+        id subViewController = [view nextResponder];
+        if ( subViewController && [subViewController isKindOfClass:[UIViewController class]]) {
+            if ([(UIViewController *)subViewController presentedViewController]  && ![subViewController presentedViewController].isBeingDismissed) {
+                return [self topViewControllerWithRootViewController:[(UIViewController *)subViewController presentedViewController]];
             }
         }
-        return viewController;
     }
+    return viewController;
 }
 
 - (void)previewControllerDidDismiss:(CustomQLViewController *)controller {
