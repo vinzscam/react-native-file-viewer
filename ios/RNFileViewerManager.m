@@ -102,6 +102,12 @@
     [self sendEventWithName:DISMISS_EVENT body: @{@"id": controller.invocation}];
 }
 
+- (void)dismissView:(id)sender {
+    UIViewController* controller = [RNFileViewer topViewController];
+    [self sendEventWithName:DISMISS_EVENT body: @{@"id": ((CustomQLViewController*)controller).invocation}];
+    [[RNFileViewer topViewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
 RCT_EXPORT_MODULE()
 
 - (NSArray<NSString *> *)supportedEvents {
@@ -116,9 +122,18 @@ RCT_EXPORT_METHOD(open:(NSString *)path invocation:(nonnull NSNumber *)invocatio
 
     QLPreviewController *controller = [[CustomQLViewController alloc] initWithFile:file identifier:invocationId];
     controller.delegate = self;
+    
+    if (@available(iOS 13.0, *)) {
+        [controller setModalInPresentation: true];
+    }
 
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:controller];
+    controller.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(dismissView:)];
+    controller.navigationController.navigationBar.translucent = NO;
+    controller.edgesForExtendedLayout = UIRectEdgeNone;
+        
     typeof(self) __weak weakSelf = self;
-    [[RNFileViewer topViewController] presentViewController:controller animated:YES completion:^{
+    [[RNFileViewer topViewController] presentViewController:navigationController animated:YES completion:^{
         [weakSelf sendEventWithName:OPEN_EVENT body: @{@"id": invocationId}];
     }];
 }
