@@ -251,3 +251,15 @@ preBuild.doFirst {
 ```
 
 If you prefer to not touch your gradle file, you can still use version `1.0.15` which is perfectly compatible.
+
+### If you get this error while using `FileViewer.open()` - "No app associated with this mime type" then add the following in your AndroidManifest:
+
+```
+<queries>
+    <intent>
+        <action android:name="android.intent.action.VIEW" />
+        <data android:mimeType="*/*" />
+    </intent>
+</queries>
+```
+
