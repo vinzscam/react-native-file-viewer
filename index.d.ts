@@ -1,11 +1,17 @@
 interface RNFileViewerOptions {
-    displayName?: string;
-    showAppsSuggestions?: boolean;
-    showOpenWithDialog?: boolean;
-    onDismiss?(): any;
+  displayName?: string;
+  showAppsSuggestions?: boolean;
+  showOpenWithDialog?: boolean;
+  onDismiss?(): any;
 }
 
-export function open(
+declare function open(
   path: string,
   options?: RNFileViewerOptions | string
 ): Promise<void>;
+
+declare namespace _default {
+  export { open };
+}
+
+export default _default;

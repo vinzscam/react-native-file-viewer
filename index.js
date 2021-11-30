@@ -54,3 +54,4 @@ function normalize(path) {
 }
 
 export default { open };
+export { open };
