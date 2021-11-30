@@ -51,10 +51,16 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
       contentUri = Uri.parse(path);
     } else {
       File newFile = new File(path);
+
+      Activity currentActivity = getCurrentActivity();
+      if(currentActivity == null) {
+        sendEvent(OPEN_EVENT, currentId, "Activity doesn't exist");
+        return;
+      }
       try {
-        final String packageName = getCurrentActivity().getPackageName();
+        final String packageName = currentActivity.getPackageName();
         final String authority = new StringBuilder(packageName).append(".provider").toString();
-        contentUri = FileProvider.getUriForFile(getCurrentActivity(), authority, newFile);
+        contentUri = FileProvider.getUriForFile(currentActivity, authority, newFile);
       }
       catch(IllegalArgumentException e) {
         sendEvent(OPEN_EVENT, currentId, e.getMessage());
