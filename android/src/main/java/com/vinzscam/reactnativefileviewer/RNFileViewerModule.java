@@ -131,4 +131,10 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
     reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
       .emit(eventName, params);
   }
+
+  @ReactMethod
+  public void addListener(String eventName) { }
+
+  @ReactMethod
+  public void removeListeners(Integer count) { }
 }
