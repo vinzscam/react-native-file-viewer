@@ -118,9 +118,13 @@ RCT_EXPORT_METHOD(open:(NSString *)path invocation:(nonnull NSNumber *)invocatio
     controller.delegate = self;
 
     typeof(self) __weak weakSelf = self;
-    [[RNFileViewer topViewController] presentViewController:controller animated:YES completion:^{
-        [weakSelf sendEventWithName:OPEN_EVENT body: @{@"id": invocationId}];
-    }];
+    if([QLPreviewController canPreviewItem:file]) {
+        [[RNFileViewer topViewController] presentViewController:controller animated:YES completion:^{
+            [weakSelf sendEventWithName:OPEN_EVENT body: @{@"id": invocationId}];
+        }];
+    } else {
+        [weakSelf sendEventWithName:OPEN_EVENT body: @{@"id": invocationId, @"error": @"File not supported"}];
+    }
 }
 
 @end
