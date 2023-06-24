@@ -24,6 +24,7 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
   private final ReactApplicationContext reactContext;
   private static final String SHOW_OPEN_WITH_DIALOG = "showOpenWithDialog" ;
   private static final String SHOW_STORE_SUGGESTIONS ="showAppsSuggestions";
+  private static final String FLAG_ACTIVITY_NEW_TASK ="intentFlagActivityNewTask"; // 2023-06-24 (JJ): Supporting intentFlagActivityNewTask in FileViewer.open options parameter
   private static final String OPEN_EVENT = "RNFileViewerDidOpen";
   private static final String DISMISS_EVENT = "RNFileViewerDidDismiss";
   private static final Integer RN_FILE_VIEWER_REQUEST = 33341;
@@ -46,6 +47,7 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
     Uri contentUri = null;
     Boolean showOpenWithDialog = options.hasKey(SHOW_OPEN_WITH_DIALOG) ? options.getBoolean(SHOW_OPEN_WITH_DIALOG) : false;
     Boolean showStoreSuggestions = options.hasKey(SHOW_STORE_SUGGESTIONS) ? options.getBoolean(SHOW_STORE_SUGGESTIONS) : false;
+    Boolean intentFlagActivityNewTask = options.hasKey(FLAG_ACTIVITY_NEW_TASK) ? options.getBoolean(FLAG_ACTIVITY_NEW_TASK) : false; // 2023-06-24 (JJ): Supporting intentFlagActivityNewTask in FileViewer.open options parameter
 
     if(path.startsWith("content://")) {
       contentUri = Uri.parse(path);
@@ -80,6 +82,12 @@ public class RNFileViewerModule extends ReactContextBaseJavaModule {
 
     shareIntent.setAction(Intent.ACTION_VIEW);
     shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+    // 2023-06-24 (JJ): Supporting intentFlagActivityNewTask in FileViewer.open options parameter
+    if (intentFlagActivityNewTask) {
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    }
+
     shareIntent.setDataAndType(contentUri, mimeType);
     shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
     Intent intentActivity;
