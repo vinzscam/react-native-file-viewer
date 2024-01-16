@@ -81,7 +81,6 @@ pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer'
 1. Open up `android/app/src/main/java/[...]/MainApplication.java`
 
 - Add `import com.vinzscam.reactnativefileviewer.RNFileViewerPackage;` to the imports at the top of the file
-- Add `new RNFileViewerPackage()` to the list returned by the `getPackages()` method
 
 2. Append the following lines to `android/settings.gradle`:
 
@@ -93,7 +92,7 @@ pod 'RNFileViewer', :path => '../node_modules/react-native-file-viewer'
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
 
    ```
-   compile project(':react-native-file-viewer')
+   implementation project(':react-native-file-viewer')
    ```
 
 4. Locate `react-native-file-viewer` inside `node_modules` folder and copy `android/src/main/res/xml/file_viewer_provider_paths.xml` to your project `res/xml/` directory
